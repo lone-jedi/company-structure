@@ -6,7 +6,9 @@ import com.luxoft.company.entity.Department;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DepartmentDao {
@@ -15,7 +17,8 @@ public class DepartmentDao {
             SELECT department.id, department.title, COUNT(employee_department.employee_id) AS employees_count
             FROM department
             LEFT JOIN employee_department ON employee_department.department_id = department.id
-            GROUP BY department.id;
+            GROUP BY department.id
+            ORDER BY employees_count DESC;
             """;
 
     private final Connection connection;
@@ -25,21 +28,19 @@ public class DepartmentDao {
         this.connection = connection;
     }
 
-    public Map<Department, Integer> getEmployeesCount() {
+    public List<Department> getAll() {
         try (ResultSet resultSet = connection.prepareStatement(GET_EMPLOYEES_COUNT_SQL).executeQuery()) {
-            Map<Department, Integer> employeesCountByDepartment = new HashMap<>();
+            List<Department> employeesCountByDepartment = new ArrayList<>();
 
             while (resultSet.next()) {
                 Department department = DEPARTMENT_ROW_MAPPER.mapRow(resultSet);
-                int count = resultSet.getInt("employees_count");
-
-                employeesCountByDepartment.put(department, count);
+                employeesCountByDepartment.add(department);
             }
 
             return employeesCountByDepartment;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error with getting count of employees by departments", e);
         }
     }
 }

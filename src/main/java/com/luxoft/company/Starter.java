@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.List;
 
 public class Starter {
     public static void main(String[] args) {
@@ -22,8 +22,8 @@ public class Starter {
             DepartmentService departmentService = new DepartmentService(departmentDao);
             DepartmentWriter departmentWriter = new DepartmentWriter(System.out);
 
-            Map<Department, Integer> employeesCount = departmentService.getEmployeesCount();
-            departmentWriter.write(employeesCount);
+            List<Department> departments = departmentService.getAll();
+            departmentWriter.write(departments);
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
