@@ -1,8 +1,15 @@
 package com.luxoft.company;
 
+import com.luxoft.company.dao.DepartmentDao;
+import com.luxoft.company.entity.Department;
+import com.luxoft.company.service.DepartmentService;
+import com.luxoft.company.writer.DepartmentWriter;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class Starter {
     public static void main(String[] args) {
@@ -17,7 +24,7 @@ public class Starter {
 
             Map<Department, Integer> employeesCount = departmentService.getEmployeesCount();
             departmentWriter.write(employeesCount);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 
