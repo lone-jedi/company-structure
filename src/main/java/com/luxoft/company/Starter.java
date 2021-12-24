@@ -23,10 +23,20 @@ public class Starter {
             DepartmentWriter departmentWriter = new DepartmentWriter(System.out);
 
             List<Department> departments = departmentService.getAll();
-            departmentWriter.write(departments);
-        } catch (SQLException | IOException e) {
+            departmentWriter.writeByEmployeesCount(departments);
+        } catch (SQLException e) {
+            System.out.println("Database exception:");
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IOException exception:");
+            System.out.println(e.getMessage());
+        } catch (RuntimeException e) {
+            System.out.println("Runtime exception:");
             e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (Throwable e) {
+            System.out.println("Unknown exception:");
+            System.out.println(e.getMessage());
         }
-
     }
 }
