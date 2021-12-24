@@ -12,7 +12,7 @@ public class DepartmentDao {
     private static final String GET_EMPLOYEES_COUNT_SQL = """
             SELECT department.id, department.title, COUNT(employee_department.employee_id) AS employees_count
             FROM department
-            LEFT JOIN employee_department ON employee_department.department_id = department.id
+            JOIN employee_department ON employee_department.department_id = department.id
             GROUP BY department.id
             ORDER BY employees_count DESC;
             """;
