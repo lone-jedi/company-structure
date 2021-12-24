@@ -32,7 +32,6 @@ public class Starter {
             System.out.println(e.getMessage());
         } catch (RuntimeException e) {
             System.out.println("Runtime exception:");
-            e.printStackTrace();
             System.out.println(e.getMessage());
         } catch (Throwable e) {
             System.out.println("Unknown exception:");
